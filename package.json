@@ -1,0 +1,18 @@
+{
+  "name": "learn-gulp",
+  "version": "1.0.0",
+  "description": "Learn Gulp by building an awesome development environment",
+  "repository": "https://github.com/heroyooi/learn-gulp",
+  "author": "Heroyooi <heroyooi1018@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "gulp dev",
+    "build": "gulp build"
+  },
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "@babel/core": "^7.13.15",
+    "@babel/preset-env": "^7.13.15",
+    "@babel/register": "^7.13.14"
+  }
+}
