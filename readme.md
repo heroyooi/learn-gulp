@@ -57,10 +57,10 @@ npm i gulp-gh-pages -D
 
 ## 참고 url
 
-[gulp 공식문서](https://gulpjs.com/)
-[gulp 플러그인 | gulp-webserver](https://www.npmjs.com/package/gulp-webserver)
-[gulp 플러그인 | gulp-image](https://www.npmjs.com/package/gulp-image)
-[배포 url](http://heroyooi.github.io/learn-gulp)
+- [gulp 공식문서](https://gulpjs.com/)
+- [gulp 플러그인 | gulp-webserver](https://www.npmjs.com/package/gulp-webserver)
+- [gulp 플러그인 | gulp-image](https://www.npmjs.com/package/gulp-image)
+- [배포 url](http://heroyooi.github.io/learn-gulp)
 
 ## 강좌
 
