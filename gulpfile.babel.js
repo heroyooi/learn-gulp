@@ -1,21 +1,18 @@
 import gulp from "gulp";
-import gpug from "gulp-pug";
 import del from "del";
 import ws from "gulp-webserver";
 import image from "gulp-image";
 import sass from "gulp-sass";
-import autoprefixer from "gulp-autoprefixer";
 import miniCSS from "gulp-csso";
 import bro from "gulp-bro";
 import babelify from "babelify";
-import ghPages from "gulp-gh-pages";
+import fileinclude from "gulp-file-include";
 
 sass.compiler = require("node-sass");
 
 const routes = {
-  pug: {
-    watch: "src/**/*.pug",
-    src: "src/*.pug",
+  html: {
+    src: "src/html/**/*.html",
     dest: "build",
   },
   img: {
@@ -34,10 +31,12 @@ const routes = {
   },
 };
 
-const pug = () =>
-  gulp.src(routes.pug.src).pipe(gpug()).pipe(gulp.dest(routes.pug.dest));
-
 const clean = () => del(["build/", ".publish"]);
+
+const html = () => gulp.src(routes.html.src).pipe(fileinclude({
+  prefix: '@@',
+  basePath: '@file'
+})).pipe(gulp.dest(routes.html.dest));
 
 const webserver = () =>
   gulp.src("build").pipe(ws({ livereload: true, open: true }));
@@ -49,11 +48,6 @@ const styles = () =>
   gulp
     .src(routes.scss.src)
     .pipe(sass().on("error", sass.logError))
-    .pipe(
-      autoprefixer({
-        browsers: ["last 2 versions"],
-      })
-    )
     .pipe(miniCSS())
     .pipe(gulp.dest(routes.scss.dest));
 
@@ -70,10 +64,8 @@ const js = () =>
     )
     .pipe(gulp.dest(routes.js.dest));
 
-const gh = () => gulp.src("build/**/*").pipe(ghPages());
-
 const watch = () => {
-  gulp.watch(routes.pug.watch, pug);
+  gulp.watch(routes.html.src, html);
   gulp.watch(routes.img.src, img);
   gulp.watch(routes.scss.watch, styles);
   gulp.watch(routes.js.watch, js);
@@ -81,10 +73,10 @@ const watch = () => {
 
 const prepare = gulp.series([clean, img]);
 
-const assets = gulp.series([pug, styles, js]);
+const assets = gulp.series([html, styles, js]);
 
 const live = gulp.parallel([webserver, watch]);
 
 export const build = gulp.series([prepare, assets]);
 export const dev = gulp.series([build, live]);
-export const deploy = gulp.series([build, gh, clean]);
+export const deploy = gulp.series([build, clean]);
